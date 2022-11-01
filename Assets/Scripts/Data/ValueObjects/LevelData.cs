@@ -1,8 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class LevelData
-{
-    
-}
+[Serializable]
+   public class LevelData
+    {
+        public List<PoolData> PoolList = new List<PoolData>();
+    }
+
+    public struct PoolData
+    {
+        public sbyte RequiredObjectCount;
+    }

@@ -1,12 +1,27 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Enums;
 
 public class CoreGameSignals : MonoBehaviour
 {
     //this is a messenger class
     #region Singleton
     
-    public static CoreGameSignals Instance;
+        public static CoreGameSignals Instance;
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Debug.LogWarning(Instance.GetInstanceID().ToString());
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+
+    }
+
+    #endregion
 
     public UnityAction<GameStates> onChangeGameState = delegate { }; // look up delegate function
     public UnityAction<int> onLevelInitialize = delegate { };
@@ -16,19 +31,4 @@ public class CoreGameSignals : MonoBehaviour
     public UnityAction onNextLevel = delegate { };
     public UnityAction onRestartLevel = delegate { };
     public UnityAction onReset = delegate { };
-
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        Debug.LogWarning(Instance.GetInstanceID().ToString());
-
-    }
-
-    #endregion
 }

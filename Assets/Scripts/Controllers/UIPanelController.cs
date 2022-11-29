@@ -1,5 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using Enums;
+using Signals;
+using UnityEngine;
 
 public class UIPanelController : MonoBehaviour
 {
@@ -19,12 +22,16 @@ public class UIPanelController : MonoBehaviour
 
     private void SubscribeEvents()
     {
-
+        CoreUISignals.Instance.onOpenPanel += OnOpenPanel;
+        CoreUISignals.Instance.onClosePanel += OnClosePanel;
+        CoreUISignals.Instance.onCloseAllPanels += OnCloseAllPanels;
     }
 
     private void UnsubscribeEvents()
     {
-
+        CoreUISignals.Instance.onOpenPanel -= OnOpenPanel;
+        CoreUISignals.Instance.onClosePanel -= OnClosePanel;
+        CoreUISignals.Instance.onCloseAllPanels -= OnCloseAllPanels;
     }
 
     private void OnDisable()
@@ -56,4 +63,5 @@ public class UIPanelController : MonoBehaviour
                 Destroy(layers[i].GetChild(0).gameObject);
             }
         }
+    }
 }

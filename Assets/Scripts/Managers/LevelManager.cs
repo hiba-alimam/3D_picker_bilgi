@@ -1,5 +1,6 @@
 using Commands;
 using Data.UnityObjects;
+using Signals;
 using UnityEngine;
 
 namespace Managers
@@ -21,7 +22,7 @@ namespace Managers
 
         #region Private Variables
 
-        private CDLevel _levelData;
+        private CD_Level _levelData;
 
         private OnLevelLoaderCommand _levelLoaderCommand;
         private OnLevelDestroyerCommand _levelDestroyerCommand;
@@ -51,7 +52,7 @@ namespace Managers
             return 0;
         }
 
-        private CDLevel GetLevelData() => Resources.Load<CDLevel>("Data/CDLevel");
+        private CD_Level GetLevelData() => Resources.Load<CD_Level>("Data/CD_Level");
 
         private void Init()
         {
@@ -74,7 +75,7 @@ namespace Managers
 
         private void UnSubscribeEvents()
         {
-            CoreGameSignals.Instance.onLevelInitialize -= _levelLoaderCommand.Execute;
+            CoreGameSignals.Instance.onLevelInitialize -= _levelLoaderCommand.Execute; ;
             CoreGameSignals.Instance.onClearActiveLevel -= _levelDestroyerCommand.Execute;
             CoreGameSignals.Instance.onNextLevel -= OnNextLevel;
             CoreGameSignals.Instance.onRestartLevel -= OnRestartLevel;
@@ -87,7 +88,8 @@ namespace Managers
 
         private void Start()
         {
-            _levelLoaderCommand.Execute(levelID);
+            CoreGameSignals.Instance.onLevelInitialize?.Invoke(levelID);
+            CoreUISignals.Instance.onOpenPanel?.Invoke(Enums.UIPanelTypes.Start, 1);
         }
 
         private void OnNextLevel()
@@ -96,7 +98,6 @@ namespace Managers
             CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
             CoreGameSignals.Instance.onReset?.Invoke();
             CoreGameSignals.Instance.onLevelInitialize?.Invoke(levelID);
-
         }
 
         private void OnRestartLevel()

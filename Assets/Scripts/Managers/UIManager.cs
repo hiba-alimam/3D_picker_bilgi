@@ -2,9 +2,11 @@ using Enums;
 using Signals;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+namespace Managers
 {
-    #region Self Variables
+    public class UIManager : MonoBehaviour
+    {
+        #region Self Variables
 
         #region Public Variables
 
@@ -27,7 +29,7 @@ public class UIManager : MonoBehaviour
 
         private void SubscribeEvents()
         {
-            CoreGameSignals.Instance.onLevelInitialize -= OnLevelInitialize;
+            CoreGameSignals.Instance.onLevelInitialize += OnLevelInitialize;
             CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
             CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
             CoreGameSignals.Instance.onReset += OnReset;
@@ -85,4 +87,5 @@ public class UIManager : MonoBehaviour
             CoreUISignals.Instance.onCloseAllPanels?.Invoke();
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 1);
         }
+    }
 }

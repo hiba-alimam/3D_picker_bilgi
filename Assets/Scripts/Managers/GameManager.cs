@@ -1,23 +1,24 @@
-using UnityEngine;
-//using Sirenix.OdinInspector;
 using Enums;
+using Signals;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region self variables
+    #region Self Variables
 
-    #region serialized variable
+    #region Serialized Variables
 
-    [SerializeField] private GameStates states; 
+    [SerializeField] private GameStates states;
 
     #endregion
+
     #endregion
 
 
     private void Awake()
     {
         Application.targetFrameRate = 60;
-
     }
 
     private void OnEnable()
@@ -39,10 +40,10 @@ public class GameManager : MonoBehaviour
     {
         UnsubscribeEvents();
     }
-     
+
+    //[Button("Change State")]
     private void OnChangeGameState(GameStates state)
     {
         states = state;
     }
 }
-

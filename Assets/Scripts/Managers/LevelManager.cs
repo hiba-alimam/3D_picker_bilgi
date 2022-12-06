@@ -22,7 +22,7 @@ namespace Managers
 
         #region Private Variables
 
-        private CD_Level _levelData;
+        private CDLevel _levelData;
 
         private OnLevelLoaderCommand _levelLoaderCommand;
         private OnLevelDestroyerCommand _levelDestroyerCommand;
@@ -52,7 +52,7 @@ namespace Managers
             return 0;
         }
 
-        private CD_Level GetLevelData() => Resources.Load<CD_Level>("Data/CD_Level");
+        private CDLevel GetLevelData() => Resources.Load<CD_Level>("Data/CD_Level");
 
         private void Init()
         {

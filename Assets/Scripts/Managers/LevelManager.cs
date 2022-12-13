@@ -52,7 +52,7 @@ namespace Managers
             return 0;
         }
 
-        private CDLevel GetLevelData() => Resources.Load<CD_Level>("Data/CD_Level");
+        private CDLevel GetLevelData() => Resources.Load<CDLevel>("Data/CDLevel");
 
         private void Init()
         {

@@ -1,7 +1,6 @@
-using Keys;
-using UnityEngine;
-using UnityEngine.Events;
 using Extensions;
+using Keys;
+using UnityEngine.Events;
 
 namespace Signals
 {
@@ -9,7 +8,7 @@ namespace Signals
     {
         public UnityAction onFirstTimeTouchTaken = delegate { };
         public UnityAction onInputTaken = delegate { };
-        public UnityAction onInputRelease = delegate { };
-        public UnityAction<HorizontalInputParams> onInputDragged = delegate { };
+        public UnityAction onInputReleased = delegate { };
+        public UnityAction<HorizontalnputParams> onInputDragged = delegate { };
     }
 }

@@ -17,6 +17,14 @@ namespace Controllers.Player
 
         #endregion
 
+        private void OntriggerEnter(Collider other)
+        {
+            if(other.CompareTag("StageArea"))
+            {
+
+            }
+        }
+
         public void OnReset()
         {
         }

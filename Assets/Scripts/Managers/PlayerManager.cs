@@ -22,6 +22,7 @@ namespace Managers
         #region Private Variables
 
         [ShowInInspector] private PlayerData _data;
+        [ShowInInspector] private bool _isReadyToMove, _isReadyToPlay;
 
         #endregion
 
@@ -51,17 +52,59 @@ namespace Managers
 
         private void SubscribeEvents()
         {
+            InputSignals.Instance.onInputTaken += OnInputTaken;
+            InputSignals.Instance.onInputReleased += OnInputReleased;
+            InputSignals.Instance.onInputDragged += OnInputDragged;
+            CoreGameSignals.Instance.onPlay += OnPlay;
+            CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
+            CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
+            CoreGameSignals.Instance.onStageAreaSuccessful += OnStageAreaSuccessful;
+            CoreGameSignals.Instance.onStageAreaEntered += OnStageAreaEntered;
             CoreGameSignals.Instance.onReset += OnReset;
         }
 
         private void UnSubscribeEvents()
         {
+            InputSignals.Instance.onInputTaken -= OnInputTaken;
+            InputSignals.Instance.onInputReleased -= OnInputReleased;
+            InputSignals.Instance.onInputDragged -= OnInputDragged;
+            CoreGameSignals.Instance.onPlay -= OnPlay;
+            CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
+            CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
+            CoreGameSignals.Instance.onStageAreaSuccessful -= OnStageAreaSuccessful;
+            CoreGameSignals.Instance.onStageAreaEntered -= OnStageAreaEntered;
             CoreGameSignals.Instance.onReset -= OnReset;
         }
 
         private void OnDisable()
         {
             UnSubscribeEvents();
+        }
+
+        private void OnInputTaken()
+        {
+            movementController = IsReadyToMove(true);
+        }
+
+        private void OnInputReleased()
+        {
+            movementController = IsReadyToMove(false);
+        }
+
+        private void OnInputDragged(HorizontalInputParams InputParams) 
+        {
+            movementController.UpdatInputParams(inputParams);
+        }
+
+        private void OnStageAreaSuccessful() 
+        {
+            movementController = IsReadyToPlay(true);
+        }
+
+
+        private void OnStageAreaEntered() 
+        {
+            movementController = IsReadyToPlay(false);
         }
 
         private void OnReset()
